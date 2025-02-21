@@ -15,6 +15,7 @@ public class Config {
     public String teleportCancelled = "Teleport cancelled because you moved.";
     public String teleportingTitle = "Teleporting to bed, please stand still...";
     public boolean cancelOnMove = true;
+    public double movementAllowance = 0.5;
     public int delay = 3;
 
     // region Saving and loading - Heavily inspired by https://github.com/Patbox/get-off-my-lawn-reserved/blob/1.21.4/src/main/java/draylar/goml/config/GOMLConfig.java#L102

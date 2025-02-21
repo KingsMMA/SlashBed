@@ -34,7 +34,7 @@ public class TeleportTask {
     public boolean tick() {
         tick++;
 
-        if (SlashBed.CONFIG.cancelOnMove && this.secondsRemaining != SlashBed.CONFIG.delay && !player.getPos().equals(this.originalPos)) {
+        if (SlashBed.CONFIG.cancelOnMove && this.secondsRemaining != SlashBed.CONFIG.delay && !player.getPos().isInRange(this.originalPos, SlashBed.CONFIG.movementAllowance)) {
             player.sendMessage(Text.literal(SlashBed.CONFIG.teleportCancelled).formatted(Formatting.RED));
             player.playSoundToPlayer(SoundEvents.ENTITY_VILLAGER_NO, SoundCategory.BLOCKS, 1.0f, 1.0f);
             return false;
