@@ -1,5 +1,5 @@
 # SlashBed
-A fabric 1.21.4 mod that adds the /bed command.  This command lets players teleport to their bed.
+A fabric 1.21.4 server-side mod that adds the /bed command.  This command lets players teleport to their bed.
 
 ### Commands
 - `/bed` - Teleport to the player's bed spawn location.
