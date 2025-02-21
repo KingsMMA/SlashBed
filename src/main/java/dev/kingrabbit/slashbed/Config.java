@@ -1,6 +1,7 @@
 package dev.kingrabbit.slashbed;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.commons.io.IOUtils;
 
@@ -10,10 +11,15 @@ import java.nio.charset.StandardCharsets;
 public class Config {
 
     public String teleportedMessage = "Teleported to bed spawn location.";
+    public String teleportingTitle = "Teleporting to bed, please stand still...";
+    public boolean cancelOnMove = true;
+    public int delay = 3;
 
     // region Saving and loading - Heavily inspired by https://github.com/Patbox/get-off-my-lawn-reserved/blob/1.21.4/src/main/java/draylar/goml/config/GOMLConfig.java#L102
     // Credit to Patbox on GitHub, licensed under MIT
-    private static final Gson GSON = new Gson();
+    private static final Gson GSON = new GsonBuilder()
+            .setPrettyPrinting()
+            .create();
 
     public static Config loadOrCreateConfig() {
         try {
