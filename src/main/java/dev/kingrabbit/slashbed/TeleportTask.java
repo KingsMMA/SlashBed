@@ -8,6 +8,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.TeleportTarget;
 
 public class TeleportTask {
@@ -16,9 +17,12 @@ public class TeleportTask {
     public int tick = 0;
     public int secondsRemaining;
 
+    public final Vec3d originalPos;
+
     public TeleportTask(ServerPlayerEntity player) {
         this.player = player;
         this.secondsRemaining = SlashBed.CONFIG.delay;
+        this.originalPos = player.getPos();
 
         player.networkHandler.sendPacket(new TitleFadeS2CPacket(0, 10, 5));
     }
@@ -29,6 +33,12 @@ public class TeleportTask {
      */
     public boolean tick() {
         tick++;
+
+        if (SlashBed.CONFIG.cancelOnMove && this.secondsRemaining != SlashBed.CONFIG.delay && !player.getPos().equals(this.originalPos)) {
+            player.sendMessage(Text.literal(SlashBed.CONFIG.teleportCancelled).formatted(Formatting.RED));
+            player.playSoundToPlayer(SoundEvents.ENTITY_VILLAGER_NO, SoundCategory.BLOCKS, 1.0f, 1.0f);
+            return false;
+        }
 
         if (tick != 1) {
             if (tick >= 20) tick = 0;
