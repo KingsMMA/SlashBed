@@ -42,14 +42,20 @@ public class SlashBed implements ModInitializer {
 					return 1;
 				}
 
+				ServerPlayerEntity player = source.getPlayer();
 				if (CONFIG.delay <= 0) {
-					source.getPlayer().teleportTo(source.getPlayer().getRespawnTarget(false, TeleportTarget.NO_OP));
+					player.teleportTo(player.getRespawnTarget(false, TeleportTarget.NO_OP));
 					source.sendFeedback(() -> Text.literal(CONFIG.teleportedMessage).formatted(Formatting.GREEN), false);
-					source.getPlayer().playSoundToPlayer(SoundEvents.BLOCK_NOTE_BLOCK_PLING.value(), SoundCategory.BLOCKS, 1.0f, 1.0f);
+					player.playSoundToPlayer(SoundEvents.BLOCK_NOTE_BLOCK_PLING.value(), SoundCategory.BLOCKS, 1.0f, 1.0f);
 					return 1;
 				}
 
-				ServerPlayerEntity player = source.getPlayer();
+				if (tasks.stream().anyMatch(task -> task.player.equals(player))) {
+					player.sendMessage(Text.literal(SlashBed.CONFIG.alreadyTeleportingMessage).formatted(Formatting.RED));
+					player.playSoundToPlayer(SoundEvents.ENTITY_VILLAGER_NO, SoundCategory.BLOCKS, 1.0f, 1.0f);
+					return 1;
+				}
+
 				tasks.add(new TeleportTask(player));
 
 				return 1;

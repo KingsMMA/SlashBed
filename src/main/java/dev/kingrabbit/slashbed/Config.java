@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 
 public class Config {
 
+    public String alreadyTeleportingMessage = "You are already being teleported to your bed.";
     public String teleportedMessage = "Teleported to bed spawn location.";
     public String teleportCancelled = "Teleport cancelled because you moved.";
     public String teleportingTitle = "Teleporting to bed, please stand still...";
